@@ -6,11 +6,12 @@ import urllib,urllib2,cookielib,json,sys,time,io,multiprocessing
 outputKeys = {"id","name","description","text"}
 pointCount = 0
 txtHeader = { 
+            "X-Forwarded-For":"10.1.1.112",
             "Origin":"http://blog.csdn.net",
             "Referer":"http://blog.csdn.net/zhchaoo",
             "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46 Safari/536.5",
             }
-url_portal = "http://blog.csdn.net/zhchaoo"
+url_portal = "http://10.1.45.117"
 url_flush = "http://share.ucweb.local/discuz/flower/flower.php"
 articleList = [] 
 cookies = 0

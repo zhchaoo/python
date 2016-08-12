@@ -1,11 +1,13 @@
+#!/usr/bin/python
+
 __author__ = 'ZhangJian'
 import requests
 import time
 import sys
 import os
+import subprocess
 
 from bs4 import BeautifulSoup
-from subprocess import Popen
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -45,7 +47,7 @@ class Index():
         try:
             response = self.session.get("http://www.zhihu.com/#signin", headers=self.headers)
             # format html
-            soup = BeautifulSoup(response.text.encode('utf-8'))
+            soup = BeautifulSoup(response.text.encode('utf-8'), "lxml")
             xsrf = str(soup.find_all("input")[0].get("value"))
         except:
             pass
@@ -56,6 +58,7 @@ class Index():
         get captcha
         :return:
         '''
+        result = ""
         timsstamp = str(int(time.time() * 1000))
         captcha_URL = 'http://www.zhihu.com/captcha.gif?r=' + timsstamp
         captcha = self.session.get(url=captcha_URL, headers=self.headers)
@@ -66,10 +69,17 @@ class Index():
         try:
             with open("captcha/" + timsstamp + '.gif', 'wb') as f:
                 f.writelines(captcha.content)
-            Popen(sys.path[0] + "/captcha/" + timsstamp + '.gif', shell=True)
+#            cmd = ["my_id=$(wmctrl -l -p | awk -v pid=$PPID '$3 == pid {print $1}')",
+#                    "&", "display", sys.path[0] + "/captcha/" + timsstamp + ".gif",
+#                    "&", "sleep", "0.1"
+#                    ";", "wmctrl", "-i", "-a", '"$my_id"']
+            cmd = ["display", sys.path[0] + "/captcha/" + timsstamp + ".gif", "&"]
+            process = subprocess.Popen(cmd, shell=True)
+            result = str(raw_input("[+]input captcha:"))
+            process.kill()
         except:
             pass
-        return str(raw_input("[+]input captcha:"))
+        return result
 
     def login(self):
         '''

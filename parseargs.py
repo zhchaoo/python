@@ -21,7 +21,7 @@ if __name__ == "__main__":
   option_parser.add_option("-f", "--file", default=None, help="Help about this python script")
   option_parser.add_option("-m", "--more", default=False, action="store_true", help="Force push fonts to the device")
   option_parser.add_option("-e", "--exclude", type='string', default=None, action="callback", callback=exclude_callback, help="parse multple args")
-  options, args = option_parser.parse_args();
+  options, args = option_parser.parse_args()
 
   if len(args) > 1:
     logging.fatal("Usage: push_resource.py [options] resouce-path")

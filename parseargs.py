@@ -27,7 +27,7 @@ if __name__ == "__main__":
     logging.fatal("Usage: push_resource.py [options] resouce-path")
   else:
     if len(args) < 1:
-      path = "";
+      path = ""
     else:
       path = args[0]
-    main(path, options);
+    main(path, options)
